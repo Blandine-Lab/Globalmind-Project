@@ -1,18 +1,18 @@
 // app/(dashboard)/layout.tsx
 "use client";
+export const dynamic = 'force-dynamic';
 
 import { useRouter } from "next/navigation";
 import { Camera, LogOut, Search, User } from "lucide-react";
 import { Sidebar } from "@/components/sidebar";
-import { createClient } from "@/lib/supabase"; // 👈 Import de Supabase
+import { createClient } from "@/lib/supabase";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const supabase = createClient(); // 👈 Initialisation du client
+  const supabase = createClient();
 
-  // 👈 Nouvelle fonction de déconnexion
   async function logout() {
-    await supabase.auth.signOut(); // Détruit la session Supabase
+    await supabase.auth.signOut();
     router.push("/login");
     router.refresh();
   }
