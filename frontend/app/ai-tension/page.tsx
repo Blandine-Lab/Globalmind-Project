@@ -518,7 +518,8 @@ export default function AITensionDashboard() {
             {result && !isMeasuring ? (
               <div className="bg-white rounded-[32px] p-6 sm:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 animate-in fade-in slide-in-from-bottom-8 duration-700 print:shadow-none print:border-none print:p-0">
                 
-                {result.model_info?.needs_recalib && (
+                {/* 🎯 CORRECTION TYPESCRIPT ICI */}
+                {Boolean(result.model_info?.needs_recalib) && (
                   <div className="mb-6 bg-amber-50 border border-amber-200 p-4 rounded-2xl flex items-start gap-3">
                     <span className="text-xl">⚠️</span>
                     <div>
@@ -527,7 +528,8 @@ export default function AITensionDashboard() {
                     </div>
                   </div>
                 )}
-                {result.model_info?.calibrated && (
+                {/* 🎯 CORRECTION TYPESCRIPT ICI */}
+                {Boolean(result.model_info?.calibrated) && (
                   <p className="text-[11px] text-emerald-600 font-semibold mb-4 flex items-center gap-1">
                     ✅ Mesure corrigée avec votre calibration personnelle
                   </p>
