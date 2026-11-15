@@ -1,10 +1,11 @@
 // app/admin/page.tsx
 "use client";
+export const dynamic = 'force-dynamic';
 
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
-import { ShieldCheck, User, Check, Save, Loader2 } from "lucide-react";
+import { ShieldCheck, User, Save, Loader2 } from "lucide-react";
 
 const ALL_SERVICES = [
   { slug: "watch", label: "Smart Watch (Caméras)" },
