@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ */
+/*  THÈME                                                              */
+/* ------------------------------------------------------------------ */
+@theme {
+  /* Palette produit */
+  --color-navy: #0B1220;
+  --color-navy-light: #111C2F;
+  --color-navy-border: #1E293B;
+  --color-brand-blue: #3B82F6;
+  --color-brand-cyan: #22D3EE;
+  --color-brand-glow: #67E8F9;
+  --color-cloud: #F8FAFC;
+  --color-ink: #0F172A;
+
+  /* Effets */
+  --shadow-glow: 0 0 40px -10px rgba(34, 211, 238, 0.4);
+
+  /* Typographie — les variables sont injectées par next/font dans layout.tsx */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+
+  /* Rythme vertical de la landing (sections) */
+  --spacing-section: 5rem; /* 80px — py-20 */
+  --spacing-section-lg: 7rem; /* 112px — lg:py-28 */
+}
+
+/* ------------------------------------------------------------------ */
+/*  UTILITAIRES CUSTOM                                                 */
+/* ------------------------------------------------------------------ */
+@utility bg-brand-gradient {
+  background-image: linear-gradient(135deg, #3B82F6 0%, #22D3EE 100%);
+}
+
+@utility text-brand-gradient {
+  background-image: linear-gradient(135deg, #3B82F6 0%, #22D3EE 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility bg-brand-halo {
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.22), transparent 55%),
+    radial-gradient(circle at 80% 60%, rgba(34, 211, 238, 0.20), transparent 55%);
+}
+
+/* ------------------------------------------------------------------ */
+/*  BASE                                                               */
+/* ------------------------------------------------------------------ */
+html,
+body {
+  background: #f8fafc;
+  color: #0f172a;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Ancres sous le header fixe (72px + 24px de marge) */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+
+/* Focus visible cohérent avec la marque (accessibilité clavier) */
+:focus-visible {
+  outline: 2px solid var(--color-brand-blue);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Vidéos : jamais de bande blanche au premier paint */
+video {
+  background-color: #0b1220;
+}
+
+/* Empêche le débordement horizontal (halos, blobs, cartes qui dépassent) */
+body {
+  overflow-x: hidden;
+}
+
+/* ------------------------------------------------------------------ */
+/*  ACCESSIBILITÉ — respecte prefers-reduced-motion                    */
+/* ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Les vidéos d'ambiance (hero) ne tournent pas — l'utilisateur garde le poster */
+  video[autoplay] {
+    animation: none !important;
+  }
+}

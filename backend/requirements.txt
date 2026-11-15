@@ -1,0 +1,12 @@
+fastapi>=0.115
+uvicorn[standard]>=0.30
+sqlalchemy>=2.0.35
+pydantic[email]>=2.10
+pydantic-settings>=2.5
+pyjwt>=2.9
+bcrypt>=4.2
+tensorflow>=2.15
+scikit-learn>=1.4
+scipy>=1.11
+numpy>=1.26
+joblib>=1.3
