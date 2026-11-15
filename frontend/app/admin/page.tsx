@@ -1,6 +1,5 @@
 // app/admin/page.tsx
 "use client";
-export const dynamic = 'force-dynamic';
 
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase";
@@ -15,7 +14,6 @@ const ALL_SERVICES = [
 ];
 
 export default function AdminDashboard() {
-  const supabase = createClient();
   const router = useRouter();
   const [clients, setClients] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -23,7 +21,10 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     const checkAdminAndFetch = async () => {
-      // 1. Vérifier si l'utilisateur est connecté
+      // 1. Créer le client Supabase ICI, uniquement côté navigateur
+      const supabase = createClient();
+
+      // 2. Vérifier si l'utilisateur est connecté
       const { data: { user } } = await supabase.auth.getUser();
       
       if (!user) {
@@ -31,7 +32,7 @@ export default function AdminDashboard() {
         return;
       }
 
-      // 2. Vérifier son rôle dans la base de données
+      // 3. Vérifier son rôle dans la base de données
       const { data: profile, error } = await supabase
         .from("profiles")
         .select("role")
@@ -40,11 +41,11 @@ export default function AdminDashboard() {
 
       if (error || profile?.role !== "admin") {
         console.log("Accès refusé. Rôle actuel :", profile?.role);
-        router.push("/dashboard"); // Rejeté vers le dashboard client
+        router.push("/dashboard");
         return;
       }
 
-      // 3. Si admin, charger la liste des clients
+      // 4. Si admin, charger la liste des clients
       const { data: clientsData } = await supabase
         .from("profiles")
         .select("*")
@@ -55,7 +56,7 @@ export default function AdminDashboard() {
     };
     
     checkAdminAndFetch();
-  }, [supabase, router]);
+  }, [router]); // Note: on retire 'supabase' des dépendances car il est créé à l'intérieur
 
   const toggleService = (clientId: string, serviceSlug: string) => {
     setClients((prev) =>
@@ -77,6 +78,8 @@ export default function AdminDashboard() {
 
   const saveChanges = async (client: any) => {
     setSavingId(client.id);
+    // Créer un nouveau client pour la sauvegarde est plus sûr
+    const supabase = createClient();
     const { error } = await supabase
       .from("profiles")
       .update({ services: client.services })
